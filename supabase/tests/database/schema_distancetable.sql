@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 12 );
+SELECT plan( 14 );
 
 SELECT has_table( 'distancetable' );
 
@@ -17,6 +17,9 @@ select col_is_pk('distancetable','id');
 
 select col_is_fk('distancetable','start_node');
 select col_is_fk('distancetable','end_node');
+
+select fk_ok('distancetable','start_node','nodescode','code');
+select fk_ok('distancetable','end_node','nodescode','code');
 
 SELECT * FROM finish();
 ROLLBACK;

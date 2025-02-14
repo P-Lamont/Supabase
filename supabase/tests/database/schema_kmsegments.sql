@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 16 );
+SELECT plan( 18 );
 
 SELECT has_table( 'kmsegments' );
 
@@ -21,6 +21,9 @@ select col_is_pk('kmsegments','table_id');
 
 select col_is_fk('kmsegments','origin');
 select col_is_fk('kmsegments','destination');
+
+select fk_ok('kmsegments','origin','nodescode','code');
+select fk_ok('kmsegments','destination','nodescode','code');
 
 SELECT * FROM finish();
 ROLLBACK;

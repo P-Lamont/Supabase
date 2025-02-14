@@ -11,7 +11,10 @@ select col_type_is('provinces','province','text');
 
 select col_is_pk('provinces','id');
 
-
+-- select results_eq(table_privs_are(
+--     'provinces','anon',
+--     ARRAY['CONNECT','SELECT','INSERT']),'TRUE'
+-- );
 
 SELECT * FROM finish();
 ROLLBACK;
