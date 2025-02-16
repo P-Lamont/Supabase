@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 14 );
+SELECT plan( 15 );
 
 SELECT has_table( 'route_table' );
 
@@ -21,5 +21,6 @@ select col_is_fk('route_table','destination');
 select fk_ok('route_table','origin','nodescode','code');
 select fk_ok('route_table','destination','nodescode','code');
 
+select has_unique('route_table','id');
 SELECT * FROM finish();
 ROLLBACK;

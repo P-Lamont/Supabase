@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 16 );
+SELECT plan( 17 );
 
 SELECT has_table( 'barangays' );
 
@@ -24,5 +24,6 @@ select col_is_null('barangays','province');
 select fk_ok('barangays','municipality','municipalities','id');
 select fk_ok('barangays','province','provinces','id');
 
+select has_unique('barangays','id');
 SELECT * FROM finish();
 ROLLBACK;

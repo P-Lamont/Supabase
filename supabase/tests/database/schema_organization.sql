@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 8 );
+SELECT plan( 11 );
 
 SELECT has_table( 'organization' );
 
@@ -13,5 +13,9 @@ select col_type_is('organization','officialName','text');
 
 select col_is_pk('organization','id');
 
+select has_unique('organization','id');
+
+select has_unique('organization','orgName');
+select has_unique('organization','officialName');
 SELECT * FROM finish();
 ROLLBACK;

@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 6 );
+SELECT plan( 8 );
 
 SELECT has_table( 'provinces' );
 
@@ -11,6 +11,8 @@ select col_type_is('provinces','province','text');
 
 select col_is_pk('provinces','id');
 
+select has_unique('provinces','id');
+select col_is_unique('provinces','province');
 -- select results_eq(table_privs_are(
 --     'provinces','anon',
 --     ARRAY['CONNECT','SELECT','INSERT']),'TRUE'

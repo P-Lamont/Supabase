@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 10 );
+SELECT plan( 11 );
 
 SELECT has_table( 'municipalities' );
 
@@ -16,6 +16,8 @@ select col_is_pk('municipalities','id');
 select col_is_fk('municipalities','province');
 
 select fk_ok('municipalities','province','provinces','id');
+
+select has_unique('municipalities','id');
 
 SELECT * FROM finish();
 ROLLBACK;

@@ -1,6 +1,6 @@
 
 BEGIN;
-SELECT plan( 21 );
+SELECT plan( 22 );
 
 SELECT has_table( 'driverlogs' );
 
@@ -27,5 +27,7 @@ SELECT col_type_is('driverlogs', 'longStart','double precision');
 select col_is_pk('driverlogs','id');
 
 select col_is_fk('driverlogs','route');
+
+select has_unique('driverlogs','id');
 SELECT * FROM finish();
 ROLLBACK;

@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 42 );
+SELECT plan( 43 );
 
 SELECT has_table( 'profile' );
 
@@ -48,5 +48,7 @@ select fk_ok('profile','barangay','barangays','id');
 select fk_ok('public','profile','id','auth','users','id');
 select fk_ok('profile','role','roles','id');
 select fk_ok('profile','v_type','v_types','id');
+
+select has_unique('profile','id');
 SELECT * FROM finish();
 ROLLBACK;

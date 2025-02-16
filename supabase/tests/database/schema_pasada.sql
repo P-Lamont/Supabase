@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 30 );
+SELECT plan( 31 );
 
 SELECT has_table( 'pasada' );
 
@@ -37,5 +37,6 @@ select fk_ok('public','pasada','driver','auth','users','id');
 select fk_ok('pasada','driver_route','route_table','id');
 select fk_ok('pasada','organization','organization','id');
 
+select has_unique('pasada','driver');
 SELECT * FROM finish();
 ROLLBACK;
