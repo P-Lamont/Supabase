@@ -1,6 +1,6 @@
 
 BEGIN;
-SELECT plan( 22 );
+SELECT plan( 25 );
 
 SELECT has_table( 'driverlogs' );
 
@@ -29,5 +29,14 @@ select col_is_pk('driverlogs','id');
 select col_is_fk('driverlogs','route');
 
 select has_unique('driverlogs','id');
+select is_empty('select * from public.driverlogs;');
+select table_privs_are(
+    'driverlogs','anon',
+    null
+);
+select table_privs_are(
+    'driverlogs','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

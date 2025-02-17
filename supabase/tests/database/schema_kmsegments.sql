@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 19 );
+SELECT plan( 22 );
 
 SELECT has_table( 'kmsegments' );
 
@@ -27,5 +27,15 @@ select fk_ok('kmsegments','destination','nodescode','code');
 
 select has_unique('kmsegments','table_id');
 
+select isnt_empty('select * from public.kmsegments;');
+
+select table_privs_are(
+    'kmsegments','anon',
+    null
+);
+select table_privs_are(
+    'kmsegments','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

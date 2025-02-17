@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 7 );
+SELECT plan( 10 );
 
 SELECT has_table( 'v_types' );
 
@@ -12,5 +12,16 @@ select col_type_is('v_types','type','text');
 select col_is_pk('v_types','id');
 
 select col_is_unique('v_types','type');
+
+select isnt_empty('select * from public.v_types;');
+
+select table_privs_are(
+    'v_types','anon',
+    null
+);
+select table_privs_are(
+    'v_types','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

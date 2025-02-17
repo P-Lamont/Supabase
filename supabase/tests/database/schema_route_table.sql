@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 15 );
+SELECT plan( 18 );
 
 SELECT has_table( 'route_table' );
 
@@ -22,5 +22,15 @@ select fk_ok('route_table','origin','nodescode','code');
 select fk_ok('route_table','destination','nodescode','code');
 
 select has_unique('route_table','id');
+select isnt_empty('select * from public.route_table;');
+
+select table_privs_are(
+    'route_table','anon',
+    null
+);
+select table_privs_are(
+    'route_table','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

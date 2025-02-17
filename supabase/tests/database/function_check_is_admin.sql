@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(4);
+SELECT plan(5);
 
 select function_returns('check_is_admin','boolean');
 select isnt_definer('check_is_admin');
@@ -59,10 +59,16 @@ select is(check_is_admin(),true);
 
 -- set role test_driver;
 -- set role authenticated;
+-- SET SESSION request.jwt.claims.role = 'admin';
 -- SET SESSION request.jwt.claims.sub = '742ae67b-abaf-4176-ad88-d328e9123304';
 -- perform set_config('request.jwt.claim.sub', '742ae67b-abaf-4176-ad88-d328e9123304', false);
 -- select is(check_is_admin(),false);
-set role anon;
-select is(check_is_admin(),false);
+-- set role anon;
+-- select is(check_is_admin(),false);
+-- select function_privs_are('check_is_admin',array[''],'postgres',array['EXECUTE']);
+-- select function_privs_are('check_is_admin',array[''],'authenticated',array['']);
+
+select function_privs_are('check_is_admin',array[''],'anon',null);
+select function_privs_are('check_is_admin',array[''],'authenticated',null);
 SELECT * FROM finish();
 ROLLBACK;

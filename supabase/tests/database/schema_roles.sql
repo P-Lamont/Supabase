@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 8 );
+SELECT plan( 11 );
 
 SELECT has_table( 'roles' );
 
@@ -14,5 +14,16 @@ select col_is_pk('roles','id');
 select has_unique('roles','id');
 
 select col_is_unique('roles','roles');
+
+select isnt_empty('select * from public.roles;');
+
+select table_privs_are(
+    'roles','anon',
+    null
+);
+select table_privs_are(
+    'roles','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

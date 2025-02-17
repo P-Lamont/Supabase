@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 8 );
+SELECT plan(11 );
 
 SELECT has_table( 'nodescode' );
 
@@ -13,5 +13,15 @@ select col_is_pk('nodescode','code');
 
 select has_unique('nodescode','code');
 select has_unique('nodescode','nodes');
+select isnt_empty('select * from public.nodescode;');
+
+select table_privs_are(
+    'nodescode','anon',
+    null
+);
+select table_privs_are(
+    'nodescode','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

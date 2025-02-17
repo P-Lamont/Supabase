@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 17 );
+SELECT plan( 21 );
 
 SELECT has_table( 'barangays' );
 
@@ -25,5 +25,16 @@ select fk_ok('barangays','municipality','municipalities','id');
 select fk_ok('barangays','province','provinces','id');
 
 select has_unique('barangays','id');
+
+select policies_are('barangays',array['anon_auth_restrict']);
+select isnt_empty('select * from public.barangays;');
+select table_privs_are(
+    'barangays','anon',
+    null
+);
+select table_privs_are(
+    'barangays','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 43 );
+SELECT plan( 46 );
 
 SELECT has_table( 'profile' );
 
@@ -50,5 +50,13 @@ select fk_ok('profile','role','roles','id');
 select fk_ok('profile','v_type','v_types','id');
 
 select has_unique('profile','id');
+
+select isnt_empty('select * from public.profile;');
+set role authenticated;
+select is_empty('select * from public.profile;');
+select table_privs_are(
+    'profile','anon',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

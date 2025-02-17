@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 15 );
+SELECT plan( 18 );
 
 SELECT has_table( 'distancetable' );
 
@@ -22,6 +22,14 @@ select fk_ok('distancetable','start_node','nodescode','code');
 select fk_ok('distancetable','end_node','nodescode','code');
 
 select has_unique('distancetable','id');
-
+select table_privs_are(
+    'distancetable','anon',
+    null
+);
+select isnt_empty('select * from public.distancetable;');
+select table_privs_are(
+    'distancetable','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

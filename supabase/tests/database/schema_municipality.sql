@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 11 );
+SELECT plan( 14 );
 
 SELECT has_table( 'municipalities' );
 
@@ -18,6 +18,15 @@ select col_is_fk('municipalities','province');
 select fk_ok('municipalities','province','provinces','id');
 
 select has_unique('municipalities','id');
+select isnt_empty('select * from public.municipalities;');
 
+select table_privs_are(
+    'municipalities','anon',
+    null
+);
+select table_privs_are(
+    'municipalities','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

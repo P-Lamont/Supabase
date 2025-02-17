@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(10);
+SELECT plan(12);
 
 select function_returns('inbetween_segmental_distance',array['text[]','integer','integer'],'real');
 select isnt_definer('inbetween_segmental_distance');
@@ -36,5 +36,7 @@ select is(
     public.inbetween_segmental_distance(array['2704','2703A','2705','5003A'],4,2),
     32947::real
 );
+select function_privs_are('inbetween_segmental_distance',array['text[]','integer','integer'],'anon',null);
+select function_privs_are('inbetween_segmental_distance',array['text[]','integer','integer'],'authenticated',null);
 SELECT * FROM finish();
 ROLLBACK;

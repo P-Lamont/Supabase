@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 31 );
+SELECT plan( 34 );
 
 SELECT has_table( 'pasada' );
 
@@ -38,5 +38,13 @@ select fk_ok('pasada','driver_route','route_table','id');
 select fk_ok('pasada','organization','organization','id');
 
 select has_unique('pasada','driver');
+
+select isnt_empty('select * from public.pasada;');
+set role authenticated;
+select is_empty('select * from public.pasada;');
+select table_privs_are(
+    'pasada','anon',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;

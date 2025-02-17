@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(4);
+SELECT plan(5);
 
 select function_returns('check_is_driver','boolean');
 select isnt_definer('check_is_driver');
@@ -47,17 +47,19 @@ select is(check_is_driver(),false,'given postgres role, function must return fal
 --         "email_verified": false,
 --         "phone_verified": false
 --         }','email',
---     '2025-01-11 16:40:03.228170+00','2025-01-17 17:47:11.506251+00','2025-01-17 17:47:11.506251+00');
+    -- '2025-01-11 16:40:03.228170+00','2025-01-17 17:47:11.506251+00','2025-01-17 17:47:11.506251+00');
 -- select results_eq('select username from public.profile where firstname =''Amina'' and lastname=''Bullan''',array['Amina']);
 -- update public.profile
 -- set "role" =3
 -- where id = '742ae67b-abaf-4176-ad88-d328e9123304'::uuid;
 
--- SET SESSION request.jwt.claims.sub = '742ae67b-abaf-4176-ad88-d328e9123304';
+select function_privs_are('check_is_driver',array[''],'anon',null);
+select function_privs_are('check_is_driver',array[''],'authenticated',null);
 -- set role authenticated;
+-- SET SESSION request.jwt.claims.sub = '742ae67b-abaf-4176-ad88-d328e9123304';
+
 -- select is(check_is_driver(),true,'given auth role, function must return true');
 -- select is(check_is_driver(),false,'given auth role, function must return false');
-set role anon;
-select is(check_is_driver(),false,'given anon role, function must return false');
+
 SELECT * FROM finish();
 ROLLBACK;

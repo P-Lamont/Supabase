@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 8 );
+SELECT plan( 11 );
 
 SELECT has_table( 'provinces' );
 
@@ -17,6 +17,16 @@ select col_is_unique('provinces','province');
 --     'provinces','anon',
 --     ARRAY['CONNECT','SELECT','INSERT']),'TRUE'
 -- );
+select isnt_empty('select * from public.provinces;');
+
+select table_privs_are(
+    'provinces','anon',
+    null
+);
+select table_privs_are(
+    'provinces','authenticated',
+    null
+);
 
 SELECT * FROM finish();
 ROLLBACK;

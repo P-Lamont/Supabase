@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 11 );
+SELECT plan( 14 );
 
 SELECT has_table( 'organization' );
 
@@ -17,5 +17,15 @@ select has_unique('organization','id');
 
 select has_unique('organization','orgName');
 select has_unique('organization','officialName');
+select isnt_empty('select * from public.organization;');
+
+select table_privs_are(
+    'organization','anon',
+    null
+);
+select table_privs_are(
+    'organization','authenticated',
+    null
+);
 SELECT * FROM finish();
 ROLLBACK;
