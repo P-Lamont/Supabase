@@ -1,8 +1,14 @@
 
 BEGIN;
-SELECT plan( 25 );
+SELECT plan( 26 );
 
 SELECT has_table( 'driverlogs' );
+select columns_are('public','driverlogs',
+    array[
+        'id','latEnd','longEnd','route','starttime','endtime','driver_id',
+        'latStart','longStart'
+    ]
+);
 
 SELECT has_column( 'driverlogs', 'id' );
 SELECT has_column( 'driverlogs', 'latEnd' );

@@ -1,8 +1,12 @@
 BEGIN;
-SELECT plan( 10 );
+SELECT plan( 11 );
 
 SELECT has_table( 'v_types' );
-
+select columns_are('public','v_types',
+    array[
+        'id','type'
+    ]
+);
 SELECT has_column( 'v_types', 'id' );
 SELECT has_column( 'v_types', 'type' );
 

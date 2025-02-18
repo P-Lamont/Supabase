@@ -1,8 +1,12 @@
 BEGIN;
-SELECT plan( 14 );
+SELECT plan( 15 );
 
 SELECT has_table( 'municipalities' );
-
+select columns_are('public','municipalities',
+    array[
+        'id','municipality','province'
+    ]
+);
 SELECT has_column( 'municipalities', 'id' );
 SELECT has_column( 'municipalities', 'municipality' );
 SELECT has_column( 'municipalities', 'province' );

@@ -1,8 +1,13 @@
 BEGIN;
-SELECT plan( 22 );
+SELECT plan( 23 );
 
 SELECT has_table( 'kmsegments' );
 
+select columns_are('public','kmsegments',
+    array[
+        'table_id','distance','latitude','longitude','origin','destination'
+    ]
+);
 SELECT has_column( 'kmsegments', 'table_id' );
 SELECT has_column( 'kmsegments', 'distance' );
 SELECT has_column( 'kmsegments', 'latitude' );

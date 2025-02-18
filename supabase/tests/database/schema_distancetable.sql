@@ -1,7 +1,8 @@
 BEGIN;
-SELECT plan( 18 );
+SELECT plan( 19 );
 
 SELECT has_table( 'distancetable' );
+select columns_are('public','distancetable',array['id','start_node','end_node','distance']);
 
 SELECT has_column( 'distancetable', 'id' );
 SELECT has_column( 'distancetable', 'start_node' );

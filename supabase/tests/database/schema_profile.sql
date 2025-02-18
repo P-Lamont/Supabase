@@ -1,8 +1,14 @@
 BEGIN;
-SELECT plan( 46 );
+SELECT plan( 62 );
 
 SELECT has_table( 'profile' );
-
+select columns_are('public','profile',
+    array[
+        'id','created_at','firstname','lastname','province','municipality',
+        'barangay','bday','username','role','subscription','v_type',
+        'daily_credits','last_query','phone','has_paid'
+    ]
+);
 SELECT has_column( 'profile', 'id' );
 SELECT has_column( 'profile', 'created_at' );
 SELECT has_column( 'profile', 'firstname' );
@@ -52,11 +58,67 @@ select fk_ok('profile','v_type','v_types','id');
 select has_unique('profile','id');
 
 select isnt_empty('select * from public.profile;');
-set role authenticated;
-select is_empty('select * from public.profile;');
 select table_privs_are(
     'profile','anon',
     null
 );
+SELECT column_privs_are(
+    'profile','barangay', 'authenticated', ARRAY['SELECT', 'UPDATE'],
+    'auth should be able to select and update columns in barangay'
+);
+SELECT column_privs_are(
+    'profile','username', 'authenticated', ARRAY['SELECT', 'UPDATE'],
+    'auth should be able to select and update columns in username'
+);
+SELECT column_privs_are(
+    'profile','subscription', 'authenticated', ARRAY['SELECT'],
+    'auth should be able to select and update columns in subscription'
+);
+SELECT column_privs_are(
+    'profile','daily_credits', 'authenticated', ARRAY['SELECT'],
+    'auth should be able to select and update columns in daily_credits'
+);
+SELECT column_privs_are(
+    'profile','phone', 'authenticated', ARRAY['SELECT', 'UPDATE'],
+    'auth should be able to select and update columns in phone'
+);
+SELECT column_privs_are(
+    'profile','bday', 'authenticated', ARRAY['SELECT'],
+    'auth should be able to select and update columns in bday'
+);
+SELECT column_privs_are(
+    'profile','municipality', 'authenticated', ARRAY['SELECT', 'UPDATE'],
+    'auth should be able to select and update columns in municipality'
+);
+SELECT column_privs_are(
+    'profile','province', 'authenticated', ARRAY['SELECT', 'UPDATE'],
+    'auth should be able to select and update columns in province'
+);
+-- select todo('array empty also returns missing empty',8);
+SELECT column_privs_are(
+    'profile','firstname', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','lastname', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','role', 'authenticated',null
+);
+SELECT column_privs_are(
+    'profile','last_query', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','id', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','created_at', 'authenticated',null
+);
+SELECT column_privs_are(
+    'profile','v_type', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','has_paid', 'authenticated', null
+);
+
 SELECT * FROM finish();
 ROLLBACK;

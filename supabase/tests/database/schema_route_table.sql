@@ -1,8 +1,12 @@
 BEGIN;
-SELECT plan( 18 );
+SELECT plan( 19 );
 
 SELECT has_table( 'route_table' );
-
+select columns_are('public','route_table',
+    array[
+        'id','origin','destination','route'
+    ]
+);
 SELECT has_column( 'route_table', 'id' );
 SELECT has_column( 'route_table', 'origin' );
 SELECT has_column( 'route_table', 'destination' );

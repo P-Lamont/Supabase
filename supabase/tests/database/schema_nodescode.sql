@@ -1,8 +1,12 @@
 BEGIN;
-SELECT plan(11 );
+SELECT plan(12 );
 
 SELECT has_table( 'nodescode' );
-
+select columns_are('public','nodescode',
+    array[
+        'code','nodes'
+    ]
+);
 SELECT has_column( 'nodescode', 'nodes' );
 SELECT has_column( 'nodescode', 'code' );
 

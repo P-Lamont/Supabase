@@ -1,7 +1,8 @@
 BEGIN;
-SELECT plan( 21 );
+SELECT plan( 22 );
 
 SELECT has_table( 'barangays' );
+select columns_are('public','barangays',array['id','barangay','province','municipality']);
 
 SELECT has_column( 'barangays', 'id' );
 SELECT has_column( 'barangays', 'barangay' );

@@ -1,8 +1,12 @@
 BEGIN;
-SELECT plan( 11 );
+SELECT plan( 12 );
 
 SELECT has_table( 'roles' );
-
+select columns_are('public','roles',
+    array[
+        'id','roles'
+    ]
+);
 SELECT has_column( 'roles', 'id' );
 SELECT has_column( 'roles', 'roles' );
 

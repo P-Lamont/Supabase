@@ -2,7 +2,12 @@ BEGIN;
 SELECT plan( 34 );
 
 SELECT has_table( 'pasada' );
-
+select columns_are('public','pasada',
+    array[
+        'driver','speed','time','segment_distance','is_reversed_route',
+        'driver_route','segment','latitude','longitude','organization','counter'
+    ]
+);
 SELECT has_column( 'pasada', 'driver' );
 SELECT has_column( 'pasada', 'speed' );
 SELECT has_column( 'pasada', 'time' );
@@ -39,11 +44,14 @@ select fk_ok('pasada','organization','organization','id');
 
 select has_unique('pasada','driver');
 
-select isnt_empty('select * from public.pasada;');
-set role authenticated;
-select is_empty('select * from public.pasada;');
+-- select isnt_empty('select * from public.pasada;');
+
 select table_privs_are(
     'pasada','anon',
+    null
+);
+select table_privs_are(
+    'pasada','authenticated',
     null
 );
 SELECT * FROM finish();

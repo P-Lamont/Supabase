@@ -1,8 +1,12 @@
 BEGIN;
-SELECT plan( 14 );
+SELECT plan( 15 );
 
 SELECT has_table( 'organization' );
-
+select columns_are('public','organization',
+    array[
+        'id','orgName','officialName'
+    ]
+);
 SELECT has_column( 'organization', 'id' );
 SELECT has_column( 'organization', 'orgName' );
 SELECT has_column( 'organization', 'officialName' );
