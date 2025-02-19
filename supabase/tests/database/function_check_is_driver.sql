@@ -57,7 +57,7 @@ select function_privs_are('check_is_driver',array[''],'anon',null);
 select function_privs_are('check_is_driver',array[''],'authenticated',null);
 -- set role authenticated;
 -- SET SESSION request.jwt.claims.sub = '742ae67b-abaf-4176-ad88-d328e9123304';
-
+-- select skip('check is driver must be true or false depending on user',2);
 -- select is(check_is_driver(),true,'given auth role, function must return true');
 -- select is(check_is_driver(),false,'given auth role, function must return false');
 

@@ -1,11 +1,11 @@
 BEGIN;
-SELECT plan( 62 );
+SELECT plan( 57 );
 
 SELECT has_table( 'profile' );
 select columns_are('public','profile',
     array[
         'id','created_at','firstname','lastname','province','municipality',
-        'barangay','bday','username','role','subscription','v_type',
+        'barangay','bday','username','role','subscription',
         'daily_credits','last_query','phone','has_paid'
     ]
 );
@@ -20,7 +20,6 @@ SELECT has_column( 'profile', 'bday' );
 SELECT has_column( 'profile', 'username' );
 SELECT has_column( 'profile', 'role' );
 SELECT has_column( 'profile', 'subscription' );
-SELECT has_column( 'profile', 'v_type' );
 SELECT has_column( 'profile', 'daily_credits' );
 SELECT has_column( 'profile', 'last_query' );
 SELECT has_column( 'profile', 'phone' );
@@ -35,9 +34,8 @@ select col_type_is('profile','municipality','smallint');
 select col_type_is('profile','barangay','integer');
 select col_type_is('profile','bday','text');
 select col_type_is('profile','username','text');
-select col_type_is('profile','role','bigint');
+select col_type_is('profile','role','smallint');
 select col_type_is('profile','subscription','date');
-select col_type_is('profile','v_type','smallint');
 select col_type_is('profile','daily_credits','smallint');
 select col_type_is('profile','last_query','date');
 select col_type_is('profile','phone','text');
@@ -48,12 +46,11 @@ select col_is_pk('profile','id');
 select col_is_fk('profile','barangay');
 select col_is_fk('profile','id');
 select col_is_fk('profile','role');
-select col_is_fk('profile','v_type');
+
 
 select fk_ok('profile','barangay','barangays','id');
 select fk_ok('public','profile','id','auth','users','id');
 select fk_ok('profile','role','roles','id');
-select fk_ok('profile','v_type','v_types','id');
 
 select has_unique('profile','id');
 
@@ -113,9 +110,7 @@ SELECT column_privs_are(
 SELECT column_privs_are(
     'profile','created_at', 'authenticated',null
 );
-SELECT column_privs_are(
-    'profile','v_type', 'authenticated', null
-);
+
 SELECT column_privs_are(
     'profile','has_paid', 'authenticated', null
 );

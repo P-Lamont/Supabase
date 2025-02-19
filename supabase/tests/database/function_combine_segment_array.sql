@@ -24,6 +24,11 @@ select is(
   public.combine_segment_array(array['2703A','2705','5003A'],2,1),
   array[]::text[]
 );
+-- select skip('must not return null after data',1);
+-- select is(
+--   public.combine_segment_array(array['2703A','2705','5003A'],2,99),
+--   null
+-- );
 select function_privs_are('combine_segment_array',array['text[]','integer','integer'],'anon',null);
 select function_privs_are('combine_segment_array',array['text[]','integer','integer'],'authenticated',null);
 SELECT * FROM finish();

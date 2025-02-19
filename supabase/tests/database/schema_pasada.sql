@@ -1,10 +1,10 @@
 BEGIN;
-SELECT plan( 34 );
+SELECT plan( 38 );
 
 SELECT has_table( 'pasada' );
 select columns_are('public','pasada',
     array[
-        'driver','speed','time','segment_distance','is_reversed_route',
+        'driver','speed','time','segment_distance','is_reversed_route','v_type',
         'driver_route','segment','latitude','longitude','organization','counter'
     ]
 );
@@ -19,6 +19,7 @@ SELECT has_column( 'pasada', 'latitude' );
 SELECT has_column( 'pasada', 'longitude' );
 SELECT has_column( 'pasada', 'organization' );
 SELECT has_column( 'pasada', 'counter' );
+SELECT has_column( 'pasada', 'v_type' );
 
 select col_type_is('pasada','driver','uuid');
 select col_type_is('pasada','speed','smallint');
@@ -31,13 +32,16 @@ select col_type_is('pasada','latitude','double precision');
 select col_type_is('pasada','longitude','double precision');
 select col_type_is('pasada','organization','integer');
 select col_type_is('pasada','counter','bigint');
+select col_type_is('pasada','v_type','smallint');
 
 select col_is_pk('pasada','driver');
 
 select col_is_fk('pasada','driver');
 select col_is_fk('pasada','driver_route');
 select col_is_fk('pasada','organization');
+select col_is_fk('pasada','v_type');
 
+select fk_ok('pasada','v_type','v_types','id');
 select fk_ok('public','pasada','driver','auth','users','id');
 select fk_ok('pasada','driver_route','route_table','id');
 select fk_ok('pasada','organization','organization','id');
