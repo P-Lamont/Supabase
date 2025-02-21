@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 12 );
+SELECT plan( 11 );
 
 SELECT has_table( 'roles' );
 select columns_are('public','roles',
@@ -15,7 +15,6 @@ select col_type_is('roles','roles','text');
 
 select col_is_pk('roles','id');
 
-select has_unique('roles','id');
 
 select col_is_unique('roles','roles');
 

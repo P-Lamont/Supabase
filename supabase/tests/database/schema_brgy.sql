@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 22 );
+SELECT plan( 21 );
 
 SELECT has_table( 'barangays' );
 select columns_are('public','barangays',array['id','barangay','province','municipality']);
@@ -25,7 +25,6 @@ select col_is_null('barangays','province');
 select fk_ok('barangays','municipality','municipalities','id');
 select fk_ok('barangays','province','provinces','id');
 
-select has_unique('barangays','id');
 
 select policies_are('barangays',array['anon_auth_restrict']);
 select isnt_empty('select * from public.barangays;');

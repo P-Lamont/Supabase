@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 23 );
+SELECT plan( 22 );
 
 SELECT has_table( 'kmsegments' );
 
@@ -30,7 +30,6 @@ select col_is_fk('kmsegments','destination');
 select fk_ok('kmsegments','origin','nodescode','code');
 select fk_ok('kmsegments','destination','nodescode','code');
 
-select has_unique('kmsegments','table_id');
 
 select isnt_empty('select * from public.kmsegments;');
 

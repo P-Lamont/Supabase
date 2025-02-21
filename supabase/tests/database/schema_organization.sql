@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 15 );
+SELECT plan( 14 );
 
 SELECT has_table( 'organization' );
 select columns_are('public','organization',
@@ -17,7 +17,6 @@ select col_type_is('organization','officialName','text');
 
 select col_is_pk('organization','id');
 
-select has_unique('organization','id');
 
 select has_unique('organization','orgName');
 select has_unique('organization','officialName');

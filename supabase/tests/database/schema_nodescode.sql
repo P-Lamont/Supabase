@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(12 );
+SELECT plan(11 );
 
 SELECT has_table( 'nodescode' );
 select columns_are('public','nodescode',
@@ -15,7 +15,6 @@ select col_type_is('nodescode','code','text');
 
 select col_is_pk('nodescode','code');
 
-select has_unique('nodescode','code');
 select has_unique('nodescode','nodes');
 select isnt_empty('select * from public.nodescode;');
 

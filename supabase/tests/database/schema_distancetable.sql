@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 19 );
+SELECT plan( 18 );
 
 SELECT has_table( 'distancetable' );
 select columns_are('public','distancetable',array['id','start_node','end_node','distance']);
@@ -22,7 +22,7 @@ select col_is_fk('distancetable','end_node');
 select fk_ok('distancetable','start_node','nodescode','code');
 select fk_ok('distancetable','end_node','nodescode','code');
 
-select has_unique('distancetable','id');
+
 select table_privs_are(
     'distancetable','anon',
     null

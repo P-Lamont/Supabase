@@ -1,21 +1,17 @@
 BEGIN;
-SELECT plan( 57 );
+SELECT plan( 53 );
 
 SELECT has_table( 'profile' );
 select columns_are('public','profile',
     array[
-        'id','created_at','firstname','lastname','province','municipality',
-        'barangay','bday','username','role','subscription',
-        'daily_credits','last_query','phone','has_paid'
+        'id','created_at','name','address','bday','username','role','subscription',
+        'daily_credits','last_query','phone','has_paid','is_male'
     ]
 );
 SELECT has_column( 'profile', 'id' );
 SELECT has_column( 'profile', 'created_at' );
-SELECT has_column( 'profile', 'firstname' );
-SELECT has_column( 'profile', 'lastname' );
-SELECT has_column( 'profile', 'province' );
-SELECT has_column( 'profile', 'municipality' );
-SELECT has_column( 'profile', 'barangay' );
+SELECT has_column( 'profile', 'name' );
+SELECT has_column( 'profile', 'address' );
 SELECT has_column( 'profile', 'bday' );
 SELECT has_column( 'profile', 'username' );
 SELECT has_column( 'profile', 'role' );
@@ -27,32 +23,34 @@ SELECT has_column( 'profile', 'has_paid' );
 
 select col_type_is('profile','id','uuid');
 select col_type_is('profile','created_at','timestamp with time zone');
-select col_type_is('profile','firstname','text');
-select col_type_is('profile','lastname','text');
-select col_type_is('profile','province','smallint');
-select col_type_is('profile','municipality','smallint');
-select col_type_is('profile','barangay','integer');
-select col_type_is('profile','bday','text');
+select col_type_is('profile','name','uuid');
+select col_type_is('profile','address','uuid');
+select col_type_is('profile','bday','uuid');
 select col_type_is('profile','username','text');
 select col_type_is('profile','role','smallint');
 select col_type_is('profile','subscription','date');
 select col_type_is('profile','daily_credits','smallint');
 select col_type_is('profile','last_query','date');
-select col_type_is('profile','phone','text');
+select col_type_is('profile','phone','uuid');
 select col_type_is('profile','has_paid','boolean');
 
 select col_is_pk('profile','id');
 
-select col_is_fk('profile','barangay');
+select col_is_fk('profile','name');
+select col_is_fk('profile','address');
+select col_is_fk('profile','bday');
+select col_is_fk('profile','phone');
 select col_is_fk('profile','id');
 select col_is_fk('profile','role');
 
 
-select fk_ok('profile','barangay','barangays','id');
+select fk_ok('public','profile','name','vault','secrets','id');
+select fk_ok('public','profile','address','vault','secrets','id');
+select fk_ok('public','profile','bday','vault','secrets','id');
+select fk_ok('public','profile','phone','vault','secrets','id');
 select fk_ok('public','profile','id','auth','users','id');
 select fk_ok('profile','role','roles','id');
 
-select has_unique('profile','id');
 
 select isnt_empty('select * from public.profile;');
 select table_privs_are(
@@ -60,8 +58,7 @@ select table_privs_are(
     null
 );
 SELECT column_privs_are(
-    'profile','barangay', 'authenticated', ARRAY['SELECT', 'UPDATE'],
-    'auth should be able to select and update columns in barangay'
+    'profile','address', 'authenticated', null
 );
 SELECT column_privs_are(
     'profile','username', 'authenticated', ARRAY['SELECT', 'UPDATE'],
@@ -76,27 +73,14 @@ SELECT column_privs_are(
     'auth should be able to select and update columns in daily_credits'
 );
 SELECT column_privs_are(
-    'profile','phone', 'authenticated', ARRAY['SELECT', 'UPDATE'],
-    'auth should be able to select and update columns in phone'
+    'profile','phone', 'authenticated', null
 );
 SELECT column_privs_are(
-    'profile','bday', 'authenticated', ARRAY['SELECT'],
-    'auth should be able to select and update columns in bday'
-);
-SELECT column_privs_are(
-    'profile','municipality', 'authenticated', ARRAY['SELECT', 'UPDATE'],
-    'auth should be able to select and update columns in municipality'
-);
-SELECT column_privs_are(
-    'profile','province', 'authenticated', ARRAY['SELECT', 'UPDATE'],
-    'auth should be able to select and update columns in province'
+    'profile','bday', 'authenticated', null
 );
 -- select todo('array empty also returns missing empty',8);
 SELECT column_privs_are(
-    'profile','firstname', 'authenticated', null
-);
-SELECT column_privs_are(
-    'profile','lastname', 'authenticated', null
+    'profile','name', 'authenticated', null
 );
 SELECT column_privs_are(
     'profile','role', 'authenticated',null

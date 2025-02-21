@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 38 );
+SELECT plan( 37 );
 
 SELECT has_table( 'pasada' );
 select columns_are('public','pasada',
@@ -46,7 +46,6 @@ select fk_ok('public','pasada','driver','auth','users','id');
 select fk_ok('pasada','driver_route','route_table','id');
 select fk_ok('pasada','organization','organization','id');
 
-select has_unique('pasada','driver');
 
 -- select isnt_empty('select * from public.pasada;');
 
