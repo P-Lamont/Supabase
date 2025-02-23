@@ -34,7 +34,7 @@ select col_is_pk('driverlogs','id');
 
 select col_is_fk('driverlogs','route');
 
-select is_empty('select * from public.driverlogs;');
+select isnt_empty('select * from public.driverlogs;');
 select table_privs_are(
     'driverlogs','anon',
     null

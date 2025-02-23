@@ -1,11 +1,11 @@
 BEGIN;
-SELECT plan( 53 );
+SELECT plan( 56 );
 
 SELECT has_table( 'profile' );
 select columns_are('public','profile',
     array[
         'id','created_at','name','address','bday','username','role','subscription',
-        'daily_credits','last_query','phone','has_paid','is_male'
+        'daily_credits','last_query','phone','has_paid','is_male','identifier'
     ]
 );
 SELECT has_column( 'profile', 'id' );
@@ -20,8 +20,10 @@ SELECT has_column( 'profile', 'daily_credits' );
 SELECT has_column( 'profile', 'last_query' );
 SELECT has_column( 'profile', 'phone' );
 SELECT has_column( 'profile', 'has_paid' );
+SELECT has_column( 'profile', 'identifier' );
 
 select col_type_is('profile','id','uuid');
+select col_type_is('profile','identifier','uuid');
 select col_type_is('profile','created_at','timestamp with time zone');
 select col_type_is('profile','name','uuid');
 select col_type_is('profile','address','uuid');
@@ -74,6 +76,9 @@ SELECT column_privs_are(
 );
 SELECT column_privs_are(
     'profile','phone', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','identifier', 'authenticated', null
 );
 SELECT column_privs_are(
     'profile','bday', 'authenticated', null
