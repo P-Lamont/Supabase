@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 38 );
+SELECT plan( 44 );
 
 SELECT has_table( 'pasada' );
 select columns_are('public','pasada',
@@ -56,6 +56,41 @@ select table_privs_are(
 select table_privs_are(
     'pasada','authenticated',
     null
+);
+select col_has_check('pasada',array['latitude']);
+select col_has_check('pasada',array['longitude']);
+
+PREPARE lat_lower_bound AS INSERT INTO public.pasada
+    ("driver", "latitude", "longitude") 
+VALUES 
+    (gen_random_uuid(), '0', '121.06033');
+SELECT throws_ok(
+    'lat_lower_bound',
+    '23514'
+);
+PREPARE lat_upper_bound AS INSERT INTO public.pasada
+    ("driver", "latitude", "longitude") 
+VALUES 
+    (gen_random_uuid(), '23', '121.06033');
+SELECT throws_ok(
+    'lat_upper_bound',
+    '23514'
+);
+PREPARE long_lower_bound AS INSERT INTO public.pasada
+    ("driver", "latitude", "longitude") 
+VALUES 
+    (gen_random_uuid(), '16.91048', '115');
+SELECT throws_ok(
+    'long_lower_bound',
+    '23514'
+);
+PREPARE long_upper_bound AS INSERT INTO public.pasada
+    ("driver", "latitude", "longitude") 
+VALUES 
+    (gen_random_uuid(), '16.91048', '129');
+SELECT throws_ok(
+    'long_upper_bound',
+    '23514'
 );
 SELECT * FROM finish();
 ROLLBACK;

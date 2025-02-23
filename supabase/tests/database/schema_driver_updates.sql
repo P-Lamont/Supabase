@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 22 );
+SELECT plan( 28 );
 
 SELECT has_table( 'driver_updates' );
 select columns_are('public','driver_updates',
@@ -38,6 +38,46 @@ select table_privs_are(
 select table_privs_are(
     'driver_updates','authenticated',
     null
+);
+
+select col_has_check('driver_updates',array['long']);
+select col_has_check('driver_updates',array['long']);
+
+PREPARE lat_lower_bound AS insert into public.driver_updates("id","datetime","lat","long","drv","log_number")
+values(
+    gen_random_uuid(),'2024-11-12 06:28:48.476456+00','0', 
+    '121.22465','5b996de3-b0e1-4c0f-bcbb-7125b21dcee3','1'
+);
+SELECT throws_ok(
+    'lat_lower_bound',
+    '23514'
+);
+PREPARE lat_upper_bound AS insert into public.driver_updates("id","datetime","lat","long","drv","log_number")
+values(
+    gen_random_uuid(),'2024-11-12 06:28:48.476456+00','23', 
+    '121.22465','5b996de3-b0e1-4c0f-bcbb-7125b21dcee3','1'
+);
+SELECT throws_ok(
+    'lat_upper_bound',
+    '23514'
+);
+PREPARE long_lower_bound AS insert into public.driver_updates("id","datetime","lat","long","drv","log_number")
+values(
+    gen_random_uuid(),'2024-11-12 06:28:48.476456+00','4', 
+    '115','5b996de3-b0e1-4c0f-bcbb-7125b21dcee3','1'
+);
+SELECT throws_ok(
+    'long_lower_bound',
+    '23514'
+);
+PREPARE long_upper_bound AS insert into public.driver_updates("id","datetime","lat","long","drv","log_number")
+values(
+    gen_random_uuid(),'2024-11-12 06:28:48.476456+00','23', 
+    '129','5b996de3-b0e1-4c0f-bcbb-7125b21dcee3','1'
+);
+SELECT throws_ok(
+    'long_upper_bound',
+    '23514'
 );
 SELECT * FROM finish();
 ROLLBACK;
