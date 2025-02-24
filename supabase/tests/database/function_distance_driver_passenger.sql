@@ -1,7 +1,6 @@
 BEGIN;
-SELECT plan(9);
+SELECT plan(10);
 
-select function_returns('distance_driver_passenger',array['text[]'],'real');
 select isnt_definer('distance_driver_passenger');
 select is_strict('distance_driver_passenger');
 select is(
@@ -13,6 +12,8 @@ select is(
 select is(
   public.distance_driver_passenger(array['260']),null);
 
+select volatility_is('distance_driver_passenger',array['text[]'],'stable');
+select function_returns('distance_driver_passenger',array['text[]'],'real');
 select function_privs_are('distance_driver_passenger',array['text[]'],'anon',null);
 select function_privs_are('distance_driver_passenger',array['text[]'],'authenticated',null);
 SELECT * FROM finish();

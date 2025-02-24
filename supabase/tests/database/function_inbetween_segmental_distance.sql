@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(14);
+SELECT plan(15);
 
 
 select isnt_definer('inbetween_segmental_distance');
@@ -46,6 +46,7 @@ select is(
 --    'invalid_value',0::real
 -- );
 select function_returns('inbetween_segmental_distance',array['text[]','integer','integer'],'real');
+select volatility_is('inbetween_segmental_distance',array['text[]','integer','integer'],'stable');
 select function_privs_are('inbetween_segmental_distance',array['text[]','integer','integer'],'anon',null);
 select function_privs_are('inbetween_segmental_distance',array['text[]','integer','integer'],'authenticated',null);
 SELECT * FROM finish();

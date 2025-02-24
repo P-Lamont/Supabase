@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(12);
+SELECT plan(13);
 select isnt_definer('combine_segment_array');
 select is_strict('combine_segment_array');
 select is(
@@ -31,6 +31,7 @@ select is(
   public.combine_segment_array(array['2703A','2705','5003A'],3,99),
   array[]::text[]
 );
+select volatility_is('combine_segment_array',array['text[]','integer','integer'],'stable');
 select function_privs_are('combine_segment_array',array['text[]','integer','integer'],'anon',null);
 select function_privs_are('combine_segment_array',array['text[]','integer','integer'],'authenticated',null);
 select function_returns('combine_segment_array',ARRAY['text[]','integer','integer'],'text[]');

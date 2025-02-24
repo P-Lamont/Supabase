@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(5);
+SELECT plan(6);
 
 select function_returns('check_is_admin','boolean');
 select isnt_definer('check_is_admin');
@@ -68,6 +68,7 @@ select is(check_is_admin(),true);
 -- select function_privs_are('check_is_admin',array[''],'postgres',array['EXECUTE']);
 -- select function_privs_are('check_is_admin',array[''],'authenticated',array['']);
 
+select volatility_is('check_is_admin',array[''],'stable');
 select function_privs_are('check_is_admin',array[''],'anon',null);
 select function_privs_are('check_is_admin',array[''],'authenticated',null);
 SELECT * FROM finish();
