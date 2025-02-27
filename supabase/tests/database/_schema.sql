@@ -76,8 +76,8 @@ select functions_are(
         'check_is_admin','check_is_driver','combine_segment_array',
         'distance_driver_passenger','distance_from_origin','drv_min','drv_set',
         'get_text_code','handle_new_user','inbetween_segmental_distance',
-        'insert_to_driver_table','q_drivers','q_drivers2','setlog','upd_ctr',
-        'update_daily_credit','update_search_counter','update_sub',
+        'insert_to_driver_table','q_drivers','setlog','upd_ctr',
+        'update_daily_credit','update_sub',
         'custom_access_token_hook'
     ]
 );

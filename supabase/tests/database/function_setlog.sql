@@ -6,6 +6,12 @@ select is_definer('setlog');
 select is_strict('setlog');
 
 select function_privs_are('setlog',array['real','real','real','real','timestamp without time zone','timestamp without time zone'],'anon',null);
-select function_privs_are('setlog',array['real','real','real','real','timestamp without time zone','timestamp without time zone'],'authenticated',array['EXECUTE']);
+select function_privs_are('setlog',
+    array[
+        'real','real','real','real','timestamp without time zone',
+        'timestamp without time zone'
+    ],
+    'authenticated',array['EXECUTE']
+);
 SELECT * FROM finish();
 ROLLBACK;
