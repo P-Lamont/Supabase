@@ -14,7 +14,11 @@ select is(
 
 select volatility_is('distance_driver_passenger',array['text[]'],'stable');
 select function_returns('distance_driver_passenger',array['text[]'],'real');
-select function_privs_are('distance_driver_passenger',array['text[]'],'anon',null);
-select function_privs_are('distance_driver_passenger',array['text[]'],'authenticated',null);
+select function_privs_are(
+  'distance_driver_passenger',array['text[]'],'anon',null
+);
+select function_privs_are(
+  'distance_driver_passenger',array['text[]'],'authenticated',null
+);
 SELECT * FROM finish();
 ROLLBACK;

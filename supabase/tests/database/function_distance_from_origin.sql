@@ -1,7 +1,9 @@
 BEGIN;
 SELECT plan(8);
 
-select function_returns('distance_from_origin',array['real','real'],'setof record');
+select function_returns(
+  'distance_from_origin',array['real','real'],'setof record'
+);
 select isnt_definer('distance_from_origin');
 select is_strict('distance_from_origin');
 
@@ -13,7 +15,11 @@ select is_empty(
   'select * from distance_from_origin(0, 125.122222)'
 );
 select volatility_is('distance_from_origin',array['real','real'],'stable');
-select function_privs_are('distance_from_origin',array['real','real'],'anon',null);
-select function_privs_are('distance_from_origin',array['real','real'],'authenticated',null);
+select function_privs_are(
+  'distance_from_origin',array['real','real'],'anon',null
+);
+select function_privs_are(
+  'distance_from_origin',array['real','real'],'authenticated',null
+);
 SELECT * FROM finish();
 ROLLBACK;
