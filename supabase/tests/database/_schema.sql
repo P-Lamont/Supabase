@@ -5,7 +5,7 @@ select tables_are(
     array[
         'barangays','distancetable','driverlogs','kmsegments','municipalities',
         'nodescode','organization','pasada','profile','provinces','roles',
-        'route_table','v_types','user_search','driver_updates'
+        'route_table','v_types','user_search','driver_updates','monthly_report'
     ]
 );
 SELECT roles_are(
@@ -78,7 +78,7 @@ select functions_are(
         'get_text_code','handle_new_user','inbetween_segmental_distance',
         'insert_to_driver_table','q_drivers','setlog','upd_ctr',
         'update_daily_credit','update_sub',
-        'custom_access_token_hook','update_profile','view_profile'
+        'custom_access_token_hook','update_profile','view_profile','monthly_agg'
     ]
 );
 
