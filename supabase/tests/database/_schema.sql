@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(24);
+SELECT plan(25);
 select tables_are(
     'public',
     array[
@@ -71,6 +71,7 @@ select hasnt_trigger('public','route_table');
 select hasnt_trigger('public','v_types');
 select hasnt_trigger('public','user_search');
 select hasnt_trigger('public','driver_updates');
+select hasnt_trigger('public','monthly_report');
 select functions_are(
     'public', ARRAY[
         'check_is_admin','check_is_driver','combine_segment_array',

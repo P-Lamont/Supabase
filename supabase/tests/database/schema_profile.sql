@@ -1,11 +1,12 @@
 BEGIN;
-SELECT plan( 56 );
+SELECT plan( 64 );
 
 SELECT has_table( 'profile' );
 select columns_are('public','profile',
     array[
         'id','created_at','name','address','bday','username','role','subscription',
-        'daily_credits','last_query','phone','has_paid','is_male','identifier'
+        'daily_credits','last_query','phone','has_paid','is_male','identifier',
+        'updated_at'
     ]
 );
 SELECT has_column( 'profile', 'id' );
@@ -21,6 +22,8 @@ SELECT has_column( 'profile', 'last_query' );
 SELECT has_column( 'profile', 'phone' );
 SELECT has_column( 'profile', 'has_paid' );
 SELECT has_column( 'profile', 'identifier' );
+SELECT has_column( 'profile', 'is_male' );
+SELECT has_column( 'profile', 'updated_at' );
 
 select col_type_is('profile','id','uuid');
 select col_type_is('profile','identifier','uuid');
@@ -35,6 +38,8 @@ select col_type_is('profile','daily_credits','smallint');
 select col_type_is('profile','last_query','date');
 select col_type_is('profile','phone','uuid');
 select col_type_is('profile','has_paid','boolean');
+select col_type_is('profile','is_male','uuid');
+select col_type_is('profile','updated_at','timestamp with time zone');
 
 select col_is_pk('profile','id');
 
@@ -44,12 +49,14 @@ select col_is_fk('profile','bday');
 select col_is_fk('profile','phone');
 select col_is_fk('profile','id');
 select col_is_fk('profile','role');
+select col_is_fk('profile','is_male');
 
 
 select fk_ok('public','profile','name','vault','secrets','id');
 select fk_ok('public','profile','address','vault','secrets','id');
 select fk_ok('public','profile','bday','vault','secrets','id');
 select fk_ok('public','profile','phone','vault','secrets','id');
+select fk_ok('public','profile','is_male','vault','secrets','id');
 select fk_ok('public','profile','id','auth','users','id');
 select fk_ok('profile','role','roles','id');
 
@@ -103,6 +110,11 @@ SELECT column_privs_are(
 SELECT column_privs_are(
     'profile','has_paid', 'authenticated', null
 );
-
+SELECT column_privs_are(
+    'profile','is_male', 'authenticated', null
+);
+SELECT column_privs_are(
+    'profile','updated_at', 'authenticated', null
+);
 SELECT * FROM finish();
 ROLLBACK;

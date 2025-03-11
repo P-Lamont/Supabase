@@ -11,12 +11,15 @@ values
     ('Galo, Terrijo '::text,'c9a4ef99-97d9-406b-bc28-6bd218b5903c'::uuid),
     ('165 J. B. Miguel Street, 4444'::text,'c1e5bf6a-b7f2-4de4-84ae-09769346adee'::uuid),
     ('09582808115'::text,'a574a529-5cf9-49db-881c-264c9158c074'::uuid),
+    ('false'::text,'6d570595-9937-480b-b6a4-ef93fd4aa7bd'::uuid),
     ('2000-08-18 00:00:00000000+00'::text,'26d84676-d603-4923-94e8-65d682e1e4e6'::uuid);
 update public.profile
 set name='c9a4ef99-97d9-406b-bc28-6bd218b5903c'::uuid,
     address='c1e5bf6a-b7f2-4de4-84ae-09769346adee'::uuid,
     phone='a574a529-5cf9-49db-881c-264c9158c074'::uuid,
-    bday='26d84676-d603-4923-94e8-65d682e1e4e6'::uuid
+    bday='26d84676-d603-4923-94e8-65d682e1e4e6'::uuid,
+    is_male = '6d570595-9937-480b-b6a4-ef93fd4aa7bd'::uuid,
+    username = 'Terrijo'
 where id = 'e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
 set role authenticated;
 select set_config('role', 'authenticated', true),
@@ -31,7 +34,7 @@ select is(
     row(
         'Galo, Terrijo '::text,'165 J. B. Miguel Street'::text,
         'Camp 4, Tuba, Benguet'::text,'09582808115'::text,
-        '2000-08-18 00:00:00000000+00'::text
+        '2000-08-18 00:00:00000000+00'::text,'false'::text,'Terrijo'::text
     )
 );
 reset role;
@@ -57,7 +60,7 @@ select is(
     row(
         null::text,'165 J. B. Miguel Street'::text,
         'Camp 4, Tuba, Benguet'::text,'09582808115'::text,
-        '2000-08-18 00:00:00000000+00'::text
+        '2000-08-18 00:00:00000000+00'::text,'false'::text,'Terrijo'::text
     )
 );
 
@@ -84,7 +87,7 @@ select is(
     row(
         null::text,null::text,
         ''::text,'09582808115'::text,
-        '2000-08-18 00:00:00000000+00'::text
+        '2000-08-18 00:00:00000000+00'::text,'false'::text,'Terrijo'::text
     )
 );
 
@@ -111,7 +114,7 @@ select is(
     row(
         null::text,null::text,
         ''::text,null::text,
-        '2000-08-18 00:00:00000000+00'::text
+        '2000-08-18 00:00:00000000+00'::text,'false'::text,'Terrijo'::text
     )
 );
 
@@ -139,7 +142,7 @@ select is(
     row(
         null::text,null::text,
         ''::text,null::text,
-        null::text
+        null::text,'false'::text,'Terrijo'::text
     )
 );
 SELECT * FROM finish();
