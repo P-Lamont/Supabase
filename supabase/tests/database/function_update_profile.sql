@@ -1,10 +1,10 @@
 begin;
 select plan (59);
-select function_returns('update_profile',array['jsonb'],'boolean');
+select function_returns('update_profile',array['text'],'boolean');
 select is_definer('update_profile');
-select function_privs_are('update_profile',array['jsonb'],'anon',null);
-select volatility_is('update_profile',array['jsonb'],'volatile');
-select function_privs_are('update_profile',array['jsonb'],'authenticated',array['EXECUTE']);
+select function_privs_are('update_profile',array['text'],'anon',null);
+select volatility_is('update_profile',array['text'],'volatile');
+select function_privs_are('update_profile',array['text'],'authenticated',array['EXECUTE']);
 insert into vault.secrets(secret,id)
 values
     ('Galo, Terrijo '::text,'c9a4ef99-97d9-406b-bc28-6bd218b5903c'::uuid),
@@ -84,42 +84,42 @@ select throws_ok(
     'code_err',
     'Invalid code'
 );
-prepare ads_err as select update_profile('{"str":"B","ads":["","Banaue","Ifugao"]}'); 
+prepare ads_err as select update_profile('{"st":"B","ads":["","Banaue","Ifugao"]}'); 
 select throws_ok(
     'ads_err',
     'Invalid address'
 );
-prepare ads_err2 as select update_profile('{"str":"B","ads":["Balawis","","Ifugao"]}'); 
+prepare ads_err2 as select update_profile('{"st":"B","ads":["Balawis","","Ifugao"]}'); 
 select throws_ok(
     'ads_err2',
     'Invalid address'
 );
-prepare ads_err3 as select update_profile('{"str":"B","ads":["Balawis","Banaue",""]}'); 
+prepare ads_err3 as select update_profile('{"st":"B","ads":["Balawis","Banaue",""]}'); 
 select throws_ok(
     'ads_err3',
     'Invalid address'
 );
-prepare ads_err4 as select update_profile('{"str":"B","ads":["B",null,"Banaue","Ifugao"]}'); 
+prepare ads_err4 as select update_profile('{"st":"B","ads":["B",null,"Banaue","Ifugao"]}'); 
 select throws_ok(
     'ads_err4',
     'Invalid address'
 );
-prepare ads_err5 as select update_profile('{"str":"B","ads":["B","Balawis",null,"Ifugao"]}'); 
+prepare ads_err5 as select update_profile('{"st":"B","ads":["B","Balawis",null,"Ifugao"]}'); 
 select throws_ok(
     'ads_err5',
     'Invalid address'
 );
-prepare ads_err6 as select update_profile('{"str":"B","ads":["B","Balawis","Banaue",null]}'); 
+prepare ads_err6 as select update_profile('{"st":"B","ads":["B","Balawis","Banaue",null]}'); 
 select throws_ok(
     'ads_err6',
     'Invalid address'
 );
-prepare ads_err7 as select update_profile('{"str":"B","ads":["B","Balawi","Banaue","Ifugao"]}'); 
+prepare ads_err7 as select update_profile('{"st":"B","ads":["B","Balawi","Banaue","Ifugao"]}'); 
 select throws_ok(
     'ads_err7',
     'Invalid address'
 );
-prepare ads_err8 as select update_profile('{"str":"B","ads":["Balawi","Banaue","Ifugao"]}'); 
+prepare ads_err8 as select update_profile('{"st":"B","ads":["Balawi","Banaue","Ifugao"]}'); 
 select throws_ok(
     'ads_err8',
     'Invalid address'
@@ -136,7 +136,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare one_result2 as select update_profile('{"str":"B","ads":["Balawis","Banaue","Ifugao"]}'); 
+prepare one_result2 as select update_profile('{"st":"B","ads":["Balawis","Banaue","Ifugao"]}'); 
 select results_eq('one_result2',array[true]);
 reset role;
 update public.profile
@@ -150,7 +150,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare one_result3 as select update_profile('{"str":"","ads":["Balawis","Banaue","Ifugao"]}'); 
+prepare one_result3 as select update_profile('{"st":"","ads":["Balawis","Banaue","Ifugao"]}'); 
 select results_eq('one_result3',array[true]);
 select is(
     public.view_profile(),
@@ -172,7 +172,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare one_result4 as select update_profile('{"str":"","ads":["Poitan","Banaue","Ifugao"]}'); 
+prepare one_result4 as select update_profile('{"st":"","ads":["Poitan","Banaue","Ifugao"]}'); 
 select results_eq('one_result4',array[true]);
 
 select is(
@@ -341,27 +341,27 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare uname_err as select update_profile('{"u_name":"f"}'); 
+prepare uname_err as select update_profile('{"usr":"f"}'); 
 select throws_ok(
     'uname_err',
     'Invalid username'
 );
-prepare uname_err1 as select update_profile('{"u_name":"fffff*"}'); 
+prepare uname_err1 as select update_profile('{"usr":"fffff*"}'); 
 select throws_ok(
     'uname_err1',
     'Invalid username'
 );
-prepare uname_err2 as select update_profile('{"u_name":"fffff "}'); 
+prepare uname_err2 as select update_profile('{"usr":"fffff "}'); 
 select throws_ok(
     'uname_err2',
     'Invalid username'
 );
-prepare uname_err3 as select update_profile('{"u_name":"srtrd rst12341ar"}'); 
+prepare uname_err3 as select update_profile('{"usr":"srtrd rst12341ar"}'); 
 select throws_ok(
     'uname_err3',
     'Invalid username'
 );
-prepare uname_ok as select update_profile('{"u_name":"fffff1"}'); 
+prepare uname_ok as select update_profile('{"usr":"fffff1"}'); 
 select results_eq('uname_ok',array[true]);
 select is(
     public.view_profile(),
@@ -383,7 +383,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare combi_err as select update_profile('{"u_name":"ffff1","gdr":"true"}'); 
+prepare combi_err as select update_profile('{"usr":"ffff1","gdr":"true"}'); 
 select throws_ok(
     'combi_err',
     'Invalid username'
@@ -400,7 +400,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare limit_err as select update_profile('{"u_name":"ffff1","gdr":"true"}'); 
+prepare limit_err as select update_profile('{"usr":"ffff1","gdr":"true"}'); 
 select throws_like(
     'limit_err',
     'Try after%'
@@ -417,7 +417,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare limit_ok as select update_profile('{"u_name":"ffff1","gdr":"true"}'); 
+prepare limit_ok as select update_profile('{"usr":"ffff1","gdr":"true"}'); 
 select throws_ok(
     'limit_ok'
 );
@@ -433,7 +433,7 @@ set_config('request.method', 'POST', true),
 set_config('request.path', '/impersonation-example-request-path', true),
 set_config('request.headers', '{"accept": "*/*"}', true);
 select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
-prepare limit_ok2 as select update_profile('{"u_name":"ffff1","gdr":"true"}'); 
+prepare limit_ok2 as select update_profile('{"usr":"ffff1","gdr":"true"}'); 
 select throws_ok(
     'limit_ok2'
 );

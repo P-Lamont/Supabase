@@ -103,7 +103,7 @@ prepare must_exist2 as
     select *
     from driver_updates 
     where drv ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid
-        and lat=16 and long=121;
+        and lat=16 and long=121 and spd=5;
 set role postgres;
 select isnt_empty('must_exist2');
 

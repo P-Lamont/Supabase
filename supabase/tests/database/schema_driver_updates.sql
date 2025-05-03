@@ -1,10 +1,10 @@
 BEGIN;
-SELECT plan( 28 );
+SELECT plan( 30 );
 
 SELECT has_table( 'driver_updates' );
 select columns_are('public','driver_updates',
     array[
-        'id','datetime','lat','long','drv','log_number'
+        'id','datetime','lat','long','drv','log_number','spd'
     ]
 );
 SELECT has_column( 'driver_updates', 'id' );
@@ -13,6 +13,7 @@ SELECT has_column( 'driver_updates', 'lat' );
 SELECT has_column( 'driver_updates', 'long' );
 SELECT has_column( 'driver_updates', 'drv' );
 SELECT has_column( 'driver_updates', 'log_number' );
+SELECT has_column( 'driver_updates', 'spd' );
 
 select col_type_is('driver_updates','id','uuid');
 select col_type_is('driver_updates','datetime','timestamp without time zone');
@@ -20,6 +21,7 @@ select col_type_is('driver_updates','lat','double precision');
 select col_type_is('driver_updates','long','double precision');
 select col_type_is('driver_updates','drv','uuid');
 select col_type_is('driver_updates','log_number','bigint');
+select col_type_is('driver_updates','spd','smallint');
 
 select col_is_pk('driver_updates','id');
 
