@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan( 16 );
+SELECT plan( 24 );
 
 select function_returns('update_daily_credit','boolean');
 select isnt_definer('update_daily_credit');
@@ -208,5 +208,198 @@ select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
 prepare validate7 as select sample_update_daily();
 
 select results_eq('validate7',array[false]);
+
+
+reset role;
+update public.profile
+set subscription =null,daily_credits=null,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=null,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+prepare validate8 as select sample_update_daily();
+
+select results_eq('validate8',array[true]);
+
+
+reset role;
+update public.profile
+set subscription =null,daily_credits=null,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=null,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+select sample_update_daily();
+prepare validate_change4 as 
+    select daily_credits,last_query
+    from public.profile
+    where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+select results_eq(
+    'validate_change4',
+    $$ values(
+        9::smallint,current_date
+    )$$
+);
+
+
+reset role;
+update public.profile
+set subscription =current_date,daily_credits=9,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=current_date,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+prepare validate10 as select sample_update_daily();
+
+select results_eq('validate10',array[true]);
+
+
+reset role;
+update public.profile
+set subscription =current_date,daily_credits=9,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=current_date,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+select sample_update_daily();
+prepare validate_change5 as 
+    select daily_credits,last_query
+    from public.profile
+    where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+select results_eq(
+    'validate_change5',
+    $$ values(
+        8::smallint,current_date
+    )$$
+);
+
+
+reset role;
+update public.profile
+set subscription =current_date,daily_credits=0,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=current_date,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+prepare validate11 as select sample_update_daily();
+
+select results_eq('validate11',array[false]);
+
+
+reset role;
+update public.profile
+set subscription =current_date,daily_credits=0,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=current_date,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+prepare validate12 as select sample_update_daily();
+prepare validate_change6 as 
+    select daily_credits,last_query,identifier
+    from public.profile
+    where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+select results_eq(
+    'validate_change6',
+    $$ values(
+        0::smallint,current_date,
+        '11111111-1111-1111-1111-111111111111'::uuid
+    )$$
+);
+
+
+reset role;
+update public.profile
+set subscription =current_date,daily_credits=1,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=current_date,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+prepare validate13 as select sample_update_daily();
+
+select results_eq('validate13',array[true]);
+
+
+reset role;
+update public.profile
+set subscription =current_date,daily_credits=0,
+    identifier='11111111-1111-1111-1111-111111111111'::uuid, 
+    last_query=current_date,role=3
+where id ='e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid;
+
+set role authenticated;
+select set_config('role', 'authenticated', true),
+set_config('request.jwt.claims', 
+    '{"aal":"aal1","amr":[{"method":"password","timestamp":2840570787}],"app_metadata":{"provider":"email","providers":["email"]},"aud":"authenticated","email":"galoAug00@gmail.com","exp":2840574387,"iat":2840570787,"iss":"https://default.supabase.co/auth/v1","phone":null,"role":"authenticated","session_id":"8a2787e7-ae95-435a-948f-b96543b4681b","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","user_metadata":{"ext":"","mun":"Tuba","sub":"e7c20bff-c372-4384-aa6b-b8263c53f405","bday":"2000-08-18 00:00:00000000+00","brgy":"Camp 4","prov":"Benguet","email":"galoAug00@gmail.com","phone":"09582808115","f_name":"Terrijo","l_name":"Galo","street":"165 J. B. Miguel Street","is_male":false,"username":"Terrijo","email_verified":false,"phone_verified":false},"is_anonymous":false}', true),
+set_config('request.method', 'POST', true),
+set_config('request.path', '/impersonation-example-request-path', true),
+set_config('request.headers', '{"accept": "*/*"}', true);
+select 1 as "ROLE_IMPERSONATION_NO_RESULTS";
+
+prepare validate14 as select sample_update_daily();
+
+select results_eq('validate14',array[false]);
 SELECT * FROM finish();
 ROLLBACK;

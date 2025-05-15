@@ -99,8 +99,8 @@ prepare not_empty2 as
     where  "lat" =15 and "long"=120;
 select results_eq('not_empty2',
     $$VALUES 
-    (null::uuid,15::double precision,120::double precision),
-    (null::uuid,15::double precision,120::double precision)
+    ('e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid,15::double precision,120::double precision),
+    ('e7c20bff-c372-4384-aa6b-b8263c53f405'::uuid,15::double precision,120::double precision)
   $$
 );
 
